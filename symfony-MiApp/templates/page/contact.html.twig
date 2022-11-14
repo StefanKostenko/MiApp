@@ -13,7 +13,8 @@
         <div class="article">
           <h2><span>Send us</span> mail</h2>
           <div class="clr"></div>
-          <form action="#" method="post" id="sendemail">
+          {{ form_start(form, { 'attr': {'id': 'formulario', 'class':'form-horizontal'}}) }}
+          {{ form_errors(form) }}
             <ol>
               <li>
                 {{ form_row(form.name, {'attr': {'class':'form-control'}}) }}
@@ -31,7 +32,7 @@
 			          {{ form_row(form.Send, {'attr': {'class':'pull-right btn btn-lg sr-button'}}) }}                <div class="clr"></div>
               </li>
             </ol>
-          </form>
+          {{ form_end(form) }}
         </div>
       </div>
       {{include ('partials/sidebar.html.twig')}}
