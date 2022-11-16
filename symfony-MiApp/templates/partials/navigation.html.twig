@@ -5,5 +5,13 @@
     <li class="{{ (app.request.attributes.get('_route') == 'about')  ? 'active': ''}}"><a href="{{ path('about')}}">About Us</a></li>
     <li class="{{ (app.request.attributes.get('_route') == 'blog')  ? 'active': ''}}"><a href="{{ path('blog')}}">Blog</a></li>
     <li class="{{ (app.request.attributes.get('_route') == 'contact')  ? 'active': ''}}"><a href="{{ path('contact')}}">Contact Us</a></li>
+    
+    {% if app.user %}
+        
+    {% else %}
+        <li class="{{ (app.request.attributes.get('_route') == 'app_login')  ? 'active': ''}} lien"><a href="{{ path('app_login') }}"> Login</a></li>
+        <li class="{{ (app.request.attributes.get('_route') == 'app_register')  ? 'active': ''}} "><a href="{{ path('app_register') }}"> Register</a></li>
+    {% endif %}
+
 </ul>
 </div>
