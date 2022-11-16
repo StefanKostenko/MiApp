@@ -7,7 +7,7 @@
     <li class="{{ (app.request.attributes.get('_route') == 'contact')  ? 'active': ''}}"><a href="{{ path('contact')}}">Contact Us</a></li>
     
     {% if app.user %}
-        
+          <li><a href="{{ path('app_logout') }}">{{ app.user.name }} - Logout</a></li>
     {% else %}
         <li class="{{ (app.request.attributes.get('_route') == 'app_login')  ? 'active': ''}} lien"><a href="{{ path('app_login') }}"> Login</a></li>
         <li class="{{ (app.request.attributes.get('_route') == 'app_register')  ? 'active': ''}} "><a href="{{ path('app_register') }}"> Register</a></li>
