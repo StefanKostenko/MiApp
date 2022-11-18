@@ -5,7 +5,7 @@ body {
 	width:100%;
 	color:#959595;
 	font:normal 12px/1.8em Arial, Helvetica, sans-serif;
-	background:#f5f1e6 url(images/main_bg.gif) repeat-y center center;
+	background:#f5f1e6 url(../images/main_bg.gif) repeat-y center center;
 }
 html, .main {
 	padding:0;
@@ -35,7 +35,7 @@ h1 {
 	color:#43bad2;
 	font:normal 42px/1.2em Arial, Helvetica, sans-serif;
 	letter-spacing:-3px;
-	background:url(images/hbg_img.jpg) no-repeat center center;
+	background:url(../images/hbg_img.jpg) no-repeat center center;
 	text-align:center;
 }
 h1 span {
