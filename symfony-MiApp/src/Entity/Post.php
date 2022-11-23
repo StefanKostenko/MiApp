@@ -34,7 +34,7 @@ class Post
 
     public function __construct()
     {
-        $this->publishedAt = new \DateTime();
+        $this->publisehAt = new \DateTime();
     }
 
     public function getId(): ?int

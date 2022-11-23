@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\PostFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,9 +33,29 @@ class BlogController extends AbstractController
             $post = $form->getData();   
             $post->setSlug($slugger->slug($post->getTitle()));
             $post->setPostUser($this->getUser());
-            $post->setTitle();
-            $post->setContent();
-            $post->setImage();
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $file = $form->get('image')->getData();
+                if ($file) {
+                    $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    // this is needed to safely include the file name as part of the URL
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+            
+                    // Move the file to the directory where images are stored
+                    try {
+                        
+                        $file->move(
+                            $this->getParameter('post_image_directory'), $newFilename
+                        );
+                       
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+                    $post->setImage($newFilename);
+                }
+            }
+
             $entityManager = $doctrine->getManager();    
             $entityManager->persist($post);
             $entityManager->flush();
@@ -46,4 +68,3 @@ class BlogController extends AbstractController
         ));
     }
 }
-
