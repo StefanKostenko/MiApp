@@ -26,10 +26,13 @@ class BlogController extends AbstractController
     }
     
     #[Route('/blog', name: 'app_blog')]
-    public function index(): Response
-    {
+    public function index(ManagerRegistry $doctrine): Response
+    {   
+        
+        $repositorio = $doctrine->getRepository(Post::class);
+        $posts = $repositorio->findAll();
         return $this->render('blog/index.html.twig', [
-            'controller_name' => 'BlogController',
+            'posts' => $posts,
         ]);
     }
 
