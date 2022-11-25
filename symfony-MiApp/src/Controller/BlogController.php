@@ -15,6 +15,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class BlogController extends AbstractController
 {
+    #[Route('/blog/{slug}', name: 'entrada-blog')]
+    public function post(ManagerRegistry $doctrine, $slug): Response
+    {
+        $repositorio = $doctrine->getRepository(Post::class);
+        $post = $repositorio->findOneBy(["slug"=>$slug]);
+        return $this->render('blog/index.html.twig', [
+            'post' => $post,
+        ]);
+    }
+    
     #[Route('/blog', name: 'app_blog')]
     public function index(): Response
     {
@@ -67,4 +77,7 @@ class BlogController extends AbstractController
             'form' => $form->createView()    
         ));
     }
+
+
+
 }
