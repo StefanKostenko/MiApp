@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactFormType;
+use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
 class PageController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
-    {
-        return $this->render('page/index.html.twig', []);
+    public function index(ManagerRegistry $doctrine): Response
+    {   
+        
+        $repositorio = $doctrine->getRepository(Post::class);
+        $posts = $repositorio->findAll();
+        return $this->render('page/index.html.twig', [
+            'posts' => $posts,
+        ]);
     }
 
     #[Route('/support', name: 'support')]
