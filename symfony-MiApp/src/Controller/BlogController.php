@@ -15,19 +15,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class BlogController extends AbstractController
 {
-    #[Route('/blog/{slug}', name: 'entrada-blog')]
-    public function post(ManagerRegistry $doctrine, $slug): Response
-    {
-        $repositorio = $doctrine->getRepository(Post::class);
-        $post = $repositorio->findOneBy(["slug"=>$slug]);
-        return $this->render('blog/index.html.twig', [
-            'post' => $post,
-        ]);
-    }
+
 
     #[Route('/blog/new', name: 'new_post')]
     public function newPost(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $post = new Post();
         $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
@@ -52,7 +46,7 @@ class BlogController extends AbstractController
                         );
                        
                     } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
+                        // ... handle esxception if something happens during file upload
                     }
                     $post->setImage($newFilename);
                 }
@@ -70,6 +64,14 @@ class BlogController extends AbstractController
         ));
     }
 
-
+    #[Route('/blog/{slug}', name: 'entrada-blog')]
+    public function post(ManagerRegistry $doctrine, $slug): Response
+    {
+        $repositorio = $doctrine->getRepository(Post::class);
+        $post = $repositorio->findOneBy(["slug"=>$slug]);
+        return $this->render('blog/index.html.twig', [
+            'post' => $post,
+        ]);
+    }
 
 }

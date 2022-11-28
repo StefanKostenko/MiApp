@@ -2,7 +2,7 @@
     <h2>{{post.title}}</h2>
     <div class="clr"></div>
     <p><span class="date">Date: <a href="#">{{ post.publisehAt | date('d') }} {{ post.publisehAt | date('F') }}</a></span> &nbsp;|&nbsp; Posted by <a href="#">{{post.postUser.name}}</a> &nbsp;|&nbsp;</p>
-    <a href="#" class="com">{{ post.id}}</a> <img src="{{asset('images/blog/' ~ post.image)}}" width="625" height="205" alt="" />
+    <a href="#" class="com">{{ post.id}}</a> <img src="{{asset('images/blog/' ~ post.image)}}" width="" height="" alt="" />
     <p>{{post.content}}</p>
-    <p class="spec"><a href="#" class="rm">Read more &raquo;</a></p>
+    <p class="spec"><a href="{{ path('entrada-blog', {slug: post.slug}) }}" class="rm">Read more &raquo;</a></p>
 </div>
