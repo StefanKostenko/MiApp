@@ -5,13 +5,36 @@
     <div class="content_resize">
       <div class="mainbar">
 
-        {% for post in posts %}
-          {{include ('partials/post.html.twig')}}
+        {% for post in posts.results %}
+          {{include ('partials/post.html.twig', {'post': post})}}
         {% endfor %}
 
+          {% if posts.hasToPaginate %}
+            <div class="text-left">
+                <ul class="pagination">
+                  <p class="pages">
+                    {% for i in 1..posts.lastPage %}
+                      
+                        {% if i == posts.currentPage %}
+                            <span>{{ i }}</span>
+                        {% else %}
+                            <a href="{{ path('index', {page: i}) }}">{{ i }}</a>
+                        {% endif %}
 
+                    {% endfor %}
 
-        <p class="pages"><small>Page 1 of 2 &nbsp;&nbsp;&nbsp;</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p>
+                    {% if posts.hasNextPage %}
+                      <a href="{{ path('index', {page: posts.nextPage}) }}" rel="next">&raquo;</a>
+                    {% else %}
+                      <span>&raquo;</span>
+                    {% endif %}
+
+                  </p>
+                </ul>
+            </div>
+          {% endif %}
+
+        <!--p class="pages"><small>Page 1 of 2 &nbsp;&nbsp;&nbsp;</small> <span>1</span> <a href="#">2</a> <a href="#">&raquo;</a></p-->
       </div>
       {{include ('partials/sidebar.html.twig')}}
     </div>

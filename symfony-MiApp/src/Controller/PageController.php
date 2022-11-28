@@ -13,12 +13,12 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class PageController extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(ManagerRegistry $doctrine): Response
+    #[Route('/{page}', name: 'index')]
+    public function index(ManagerRegistry $doctrine, int $page = 1): Response
     {   
         
         $repositorio = $doctrine->getRepository(Post::class);
-        $posts = $repositorio->findAll();
+        $posts = $repositorio->findAllPaginated($page);
         return $this->render('page/index.html.twig', [
             'posts' => $posts,
         ]);
