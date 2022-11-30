@@ -13,7 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class PageController extends AbstractController
 {
-    #[Route('/{page}', name: 'index')]
+    #[Route('/{page}', name: 'index', requirements: ['page' => "\d+"])]
     public function index(ManagerRegistry $doctrine, int $page = 1): Response
     {   
         
